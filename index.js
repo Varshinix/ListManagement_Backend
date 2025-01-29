@@ -12,7 +12,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://listmanagement-backend.onrender.com",
+    "https://list-management-frontend.vercel.app",
 ];
 
 app.use(cors({
