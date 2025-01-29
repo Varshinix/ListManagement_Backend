@@ -11,12 +11,18 @@ const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
 
 const allowedOrigins = [
-    "https://list-management-frontend.vercel.app",
-    "https://listmanagement-backend.onrender.com" 
+    "http://localhost:5173",
+    "https://listmanagement-backend.onrender.com",
 ];
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
 }));
 
