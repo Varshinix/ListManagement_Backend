@@ -4,7 +4,7 @@ const User = require("../schemas/user.schema")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const env = require("dotenv");
-env.config();
+env.config(); 
 
 
 router.post('/signup', async (req, res) => {
@@ -25,7 +25,9 @@ router.post('/signup', async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, phone, password: hashedPassword });
+        const userIcon = name.slice(0, 2).toUpperCase();
+
+        const newUser = new User({ name, email, phone, password: hashedPassword, userIcon, });
         await newUser.save();
 
         const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -38,6 +40,7 @@ router.post('/signup', async (req, res) => {
                 name: newUser.name,
                 email: newUser.email,
                 phone: newUser.phone,
+                userIcon: newUser.userIcon,
             },
         });
     } catch (error) {
@@ -74,6 +77,7 @@ router.post('/signin', async (req, res) => {
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
+                userIcon: user.userIcon,
             },
         });
     } catch (error) {
@@ -82,4 +86,4 @@ router.post('/signin', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router;  

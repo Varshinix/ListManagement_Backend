@@ -1,14 +1,24 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 const env = require("dotenv");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
-const path = require("path");
 const cors = require("cors");
-app.use(cors());
+
 env.config();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
+
+const allowedOrigins = [
+    "https://list-management-frontend.vercel.app",
+    "https://listmanagement-backend.onrender.com" 
+];
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

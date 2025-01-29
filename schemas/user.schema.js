@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 3,
     },
+    userIcon: { 
+        type: String, 
+        required: true 
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
