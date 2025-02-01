@@ -4,6 +4,7 @@ const app = express();
 const env = require("dotenv");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
+const linkRoutes = require("./routes/link");
 const cors = require("cors");
 
 env.config();
@@ -34,16 +35,17 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoutes);
+app.use("/api/link", linkRoutes);
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.listen(PORT, () => {
-    console.log("Server is running on port 3000");
-    mongoose
-    .connect(MONGO_URI)
-    .then(() => {
+mongoose.connect(MONGO_URI).then(() => {
         console.log("Connected to MongoDB");
     }).catch(err => {
         console.log(err);
     });
+
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
